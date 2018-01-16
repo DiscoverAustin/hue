@@ -26,6 +26,12 @@ class Nav extends React.Component {
             </Link>
           </Menu.Item>
 
+          <Menu.Item name='sort' className="nav">
+            <div className="text" onClick={this.props.sortByVotes}>
+              Popular
+            </div>
+          </Menu.Item>
+
             <Menu.Menu position="right">
             <Menu.Item name='logout' position='right' className="nav">
               <Link to="/login" className="text" onClick={() => this.props.authenticate('\logout')}>

@@ -5,6 +5,7 @@ import axios from 'axios';
 import styles from 'styled-components';
 import { Divider, Form, Label, Button, Header, Menu } from 'semantic-ui-react'
 import { BrowserRouter, HashRouter, Link, Switch, Route, Redirect } from 'react-router-dom';
+import Filter from 'bad-words';
 
 import './style.scss'
 import Home from './components/Home.jsx';
@@ -121,7 +122,14 @@ class App extends React.Component {
 
   // Invoked in Login by onSubmitLogin function
   authenticate(url) {
-    return axios.post(url, { username: this.state.username, password: this.state.password });
+    const filter = new Filter();
+    filter.removeWords('hello');
+    filter.removeWords('title');
+    if (filter.isProfaneLike(this.state.username)) {
+      alert('Please don\'t use profanity');
+    } else {
+      return axios.post(url, { username: this.state.username, password: this.state.password });
+    }
   }
   // Invoked in Login, Submit, UserProfile, and Home by onComponentDidMount lifecycle hook
   authorize() {
@@ -136,6 +144,14 @@ class App extends React.Component {
     });
   }
 
+  sortByVotes() {
+    let entries = this.state.entries;
+    entries = entries.sort(function(a, b) {
+      return b['up_votes'] - a['up_votes'];
+    });
+    this.setState({ entries: entries });
+  }
+
   render() {
   	return (
       <Wrapper> 
@@ -143,6 +159,7 @@ class App extends React.Component {
           user={this.state.auth}
           authenticate={this.authenticate.bind(this)}
           authorize={this.authorize.bind(this)}
+          sortByVotes={this.sortByVotes.bind(this)}
         />
         <Switch className="myList">
           <Route exact path="/" render={(props) => (

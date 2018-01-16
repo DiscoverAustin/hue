@@ -1,5 +1,7 @@
 import React from 'react';
-import { Divider, Form, Label, Button, Header, Menu } from 'semantic-ui-react'
+import { Divider, Form, Label, Button, Header, Menu } from 'semantic-ui-react';
+// var Filter = require('bad-words');
+import Filter from 'bad-words';
 
 class Submit extends React.Component {
   constructor(props) {
@@ -17,7 +19,11 @@ class Submit extends React.Component {
 
   handleClick() {
     const {history} = this.props;
-    this.props.postEntry(this.state.title, this.state.url, this.state.text)
+    const filter = new Filter();
+    const title = filter.clean(this.state.title);
+    const url = filter.clean(this.state.url);
+    const text = filter.clean(this.state.text);
+    this.props.postEntry(title, url, text)
     .then((res) => {
       if(res.data === 'success'){
         this.props.getEntries();
@@ -56,7 +62,7 @@ class Submit extends React.Component {
           <Form>
             <Form.Field>
               <label>Title</label>
-              <input placeholder='This is a site about cats' onChange={this.titleChange}/>
+              <input placeholder='This is a site about grackles' onChange={this.titleChange}/>
             </Form.Field>
             <Form.Field>
               <label>URL</label>
