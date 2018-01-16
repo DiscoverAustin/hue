@@ -1,5 +1,6 @@
 import React from 'react';
-import { Divider, Form, Label, Button, Header } from 'semantic-ui-react'
+import { Divider, Form, Label, Button, Header } from 'semantic-ui-react';
+import Filter from 'bad-words';
 
 class Login extends React.Component {
   constructor(props) {

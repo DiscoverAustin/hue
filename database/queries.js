@@ -7,7 +7,7 @@ const user = (name) => {
 const entries = () => {
   return knex('entries')
   .join('users', 'entries.userid', '=', 'users.id')
-  .select('entries.id', 'entries.url', 'entries.title', 'entries.text', 'entries.created_at', 'users.name')
+  .select('entries.id', 'entries.up_votes', 'entries.url', 'entries.title', 'entries.text', 'entries.created_at', 'users.name')
   .orderBy('entries.created_at', 'desc');
 }
 
