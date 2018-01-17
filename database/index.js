@@ -1,4 +1,4 @@
-// const config = require('../config');
+const config = require('../config');
 
 const knex = require('knex')({
   client: 'pg',
@@ -9,6 +9,14 @@ const knex = require('knex')({
     database : process.env.DATABASE_NAME ||  'hue'
   }
 });
+
+knex.raw('CREATE DATABASE DATABASE_NAME;')
+  .then(function() {
+    return knex.raw('DROP DATABASE DATABASE_NAME;')
+  })
+  .finally(function () {
+    console.log("Done");
+  });
 
 knex.schema.hasTable('users').then(function(exists) {
   if (!exists) {
@@ -27,8 +35,8 @@ knex.schema.hasTable('users').then(function(exists) {
     if (!exists) {
       knex.schema.createTable('entries', function (table) {
         table.increments();
-        table.integer('up_votes');
-        table.integer('down_votes');
+        table.integer('up_votes').defaultTo(0);
+        table.integer('down_votes').defaultTo(0);
         table.string('title');
         table.string('url');
         table.text('text');
@@ -45,8 +53,8 @@ knex.schema.hasTable('users').then(function(exists) {
     if (!exists) {
       knex.schema.createTable('comments', function (table) {
         table.increments();
-        table.integer('up_votes');
-        table.integer('down_votes');
+        table.integer('up_votes').defaultTo(0);
+        table.integer('down_votes').defaultTo(0);
         table.text('text');
         table.integer('userid').references('users.id');
         table.integer('entryid').references('entries.id');
