@@ -4,10 +4,9 @@ import { Divider, Form, Label, Button, Header } from 'semantic-ui-react'
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    // this.onSubmit = this.onSubmitLogin.bind(this);
   }
 
-  onSubmitLogin = (e) => {
+  onSubmit = (e) => {
     e.preventDefault();
     const { history } = this.props;
     this.props.authenticate(e.target.id).then((res) => {
@@ -46,6 +45,9 @@ class Login extends React.Component {
 
         <Form id="signup" onSubmit={this.onSubmit}>
           <Header as='h3'>Sign Up</Header>
+          <Form.Field inline>
+            <input onChange={this.props.emailChange} placeholder='Email' type='email' />
+          </Form.Field>
           <Form.Field inline>
             <input onChange={this.props.usernameChange} placeholder='Username' />
           </Form.Field>

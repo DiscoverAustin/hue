@@ -162,7 +162,8 @@ app.post('/signup', (req, res) => {
       res.send('Congratulations! Welcome to hue.');
     })
 	})
-  .catch(() => {
+  .catch((e) => {
+    console.error(e);
     res.send('Sorry that username already exists.');
   })
 });

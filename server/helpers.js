@@ -31,7 +31,7 @@ function checkEntryVote(userid, entryid, callback) {
 /************************************************************/
 // Authentication Functions
 /************************************************************/
-  
+
   // Invoked by a post request to "/login"
   // Required input: attempted username and password
   // On sucess: invokes comparePassword
@@ -48,9 +48,9 @@ function checkEntryVote(userid, entryid, callback) {
           })
           .catch((result) => {
             reject(result);
-          });       
+          });
         }
-      })      
+      })
     })
   }
 
@@ -66,7 +66,7 @@ function checkEntryVote(userid, entryid, callback) {
         } else {
           reject('Incorrect password.');
         }
-      });       
+      });
     })
   }
 
@@ -77,9 +77,9 @@ function checkEntryVote(userid, entryid, callback) {
   function hashPassword(req) {
     return new Promise((resolve, reject) => {
       bcrypt.hash(req.body.password, null, null, function(err, hash) {
-        insert.user(req.body.username, hash)
+        insert.user(req.body.username, hash, req.body.email)
         .then(() => resolve())
-        .catch(() => reject());
+        .catch((e) => reject(e));
       });
     })
   }
