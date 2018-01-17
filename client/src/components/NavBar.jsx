@@ -7,6 +7,7 @@ class Nav extends React.Component {
   constructor(props) {
     super(props);
   }
+  
 
   // Renders different versions of the componet depending if a user is logged in
   render (props) {
@@ -32,7 +33,13 @@ class Nav extends React.Component {
             </div>
           </Menu.Item>
 
-            <Menu.Menu position="right">
+          <Menu.Item name='nightmode' className="nav">
+            <div className="text" onClick={() => this.props.toggleClass()} >
+              {this.props.nightmode ? 'Day Mode' : 'Night Mode'}
+            </div>
+          </Menu.Item>
+
+            <Menu.Menu position="right" onClick={this.toggleClass}>
             <Menu.Item name='logout' position='right' className="nav">
               <Link to="/login" className="text" onClick={() => this.props.authenticate('\logout')}>
                 Logout
