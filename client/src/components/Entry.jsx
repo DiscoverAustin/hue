@@ -79,7 +79,7 @@ class Entry extends React.Component {
                   <Icon name='thumbs down' onClick={this.downVote.bind(this)}/>
                 </Feed.Like>
                 {this.state.thumbsDown}
-                <Link to={`/thread/${this.props.data.id}`}>comments</Link>
+                <Link to={`/thread/${this.props.data.id}`}><Icon name='comments'></Icon></Link>
                 <a onClick={this.handleClick}>remove</a>
               </Feed.Meta>
             </Feed.Content>
@@ -110,7 +110,7 @@ class Entry extends React.Component {
                   <Icon name='thumbs down' onClick={this.downVote.bind(this)}/>
                 </Feed.Like>
                 {this.state.thumbsDown}
-                <Link to={`/thread/${this.props.data.id}`}>comments</Link>
+                <Link to={`/thread/${this.props.data.id}`}><Icon name='comments'></Icon></Link>
               </Feed.Meta>
           </Feed.Content>
         </Feed.Event>
