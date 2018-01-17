@@ -28,7 +28,7 @@ class UserProfile extends React.Component {
       }
     )
     .then(data => this.setState({entries: data.data}));
-    
+
     this.props.getUserComments(this.props.match.params.name)
     .then(data => this.setState({comments: data.data}));
   }
@@ -42,7 +42,7 @@ class UserProfile extends React.Component {
         return data;
       }
     )
-    .then(data => this.setState({entry: data.data}));
+    .then(data => this.setState({entries: data.data}));
 
     this.props.getUserComments(nextprops.match.params.name)
     .then(data => this.setState({comments: data.data}));
