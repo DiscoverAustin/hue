@@ -68,7 +68,7 @@ app.post('/comments', helpers.checkUser, (req, res) => {
 app.delete('/entry', helpers.checkUser, (req, res) => {
   deletes.commentVotes(req.query.id).then(() => {
     deletes.entryVotes(req.query.id).then(() => {
-      deletes.comments(req.query.id).then(() => {     
+      deletes.comments(req.query.id).then(() => {
         deletes.entry(req.query.id).then(data => {
           res.send('deleted entry')
         });
@@ -111,7 +111,7 @@ app.post('/upVoteComment', helpers.checkUser, (req, res) => {
     } else {
       res.sendStatus(201)
     }
-  })  
+  })
 })
 
 app.post('/downVoteComment', helpers.checkUser, (req, res) => {
@@ -124,7 +124,7 @@ app.post('/downVoteComment', helpers.checkUser, (req, res) => {
     } else {
       res.sendStatus(201)
     }
-  })  
+  })
 })
 
 app.post('/upVoteEntry', helpers.checkUser, (req, res) => {
@@ -136,7 +136,7 @@ app.post('/upVoteEntry', helpers.checkUser, (req, res) => {
     } else {
       res.sendStatus(201)
     }
-  })  
+  })
 })
 
 app.post('/downVoteEntry', helpers.checkUser, (req, res) => {
@@ -148,7 +148,7 @@ app.post('/downVoteEntry', helpers.checkUser, (req, res) => {
     } else {
       res.sendStatus(201)
     }
-  })  
+  })
 })
 
 /************************************************************/
@@ -172,7 +172,7 @@ app.post('/login', (req, res) => {
   .then(() => {
     helpers.createSession(req, function() {
       res.send('Login successful');
-    })      
+    })
   })
   .catch((result) => {
     res.send(result);
@@ -194,4 +194,4 @@ app.get('/submit', helpers.checkUser, (req, res) => {
 
 let port = process.env.PORT || 1234;
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Listening on port ${port}!`))

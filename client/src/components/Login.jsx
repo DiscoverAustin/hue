@@ -4,10 +4,10 @@ import { Divider, Form, Label, Button, Header } from 'semantic-ui-react'
 class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.onSubmit = this.onSubmitLogin.bind(this);
+    // this.onSubmit = this.onSubmitLogin.bind(this);
   }
 
-  onSubmitLogin(e) {
+  onSubmitLogin = (e) => {
     e.preventDefault();
     const { history } = this.props;
     this.props.authenticate(e.target.id).then((res) => {
