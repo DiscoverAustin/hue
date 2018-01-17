@@ -8,8 +8,8 @@ class Entry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      thumbsUp: 0,
-      thumbsDown: 0,
+      thumbsUp: this.props.data.up_votes || 0,
+      thumbsDown: this.props.data.down_votes || 0,
       prestige: 0
     };
     this.handleClick = this.handleClick.bind(this);
