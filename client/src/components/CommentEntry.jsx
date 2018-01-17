@@ -7,8 +7,8 @@ class CommentEntry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      thumbsUp: 0,
-      thumbsDown: 0,
+      thumbsUp: this.props.comment.up_votes || 0,
+      thumbsDown: this.props.comment.down_votes || 0,
       prestige: 0
     };
     this.handleClick = this.handleClick.bind(this);
