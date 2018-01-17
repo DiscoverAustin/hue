@@ -10,14 +10,6 @@ const knex = require('knex')({
   }
 });
 
-knex.raw('CREATE DATABASE DATABASE_NAME;')
-  .then(function() {
-    return knex.raw('DROP DATABASE DATABASE_NAME;')
-  })
-  .finally(function () {
-    console.log("Done");
-  });
-
 knex.schema.hasTable('users').then(function(exists) {
   if (!exists) {
     knex.schema.createTable('users', function (table) {
