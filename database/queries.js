@@ -15,7 +15,7 @@ const entry = (entryid) => {
   return knex('entries')
   .where({'entries.id': entryid})
   .join('users', 'entries.userid', '=', 'users.id')
-  .select('entries.id', 'entries.url', 'entries.title', 'entries.text', 'entries.created_at', 'users.name');
+  .select('entries.id', 'entries.url', 'entries.title', 'entries.text', 'entries.created_at', 'users.name', 'entries.down_votes', 'entries.up_votes');
 }
 
 const comments = (entryid) => {
@@ -30,15 +30,15 @@ const entriesByUser = name => {
   return knex('entries')
   .where({userid: userid})
   .join('users', 'entries.userid', '=', 'users.id')
-  .select('entries.id', 'entries.url', 'entries.title', 'entries.text', 'entries.created_at', 'users.name');  
+  .select('entries.id', 'entries.url', 'entries.title', 'entries.text', 'entries.created_at', 'users.name', 'entries.down_votes', 'entries.up_votes');  
 }
 
-const commentsByUser = (name) => {
+const commentsByUser = name => {
   let userid = knex('users').where({name: name}).select('id');
   return knex('comments')
   .where({userid: userid})
   .join('users', 'comments.userid', '=', 'users.id')
-  .select('comments.id', 'comments.text', 'comments.created_at', 'comments.entryid', 'users.name');
+  .select('comments.id', 'comments.text', 'comments.created_at', 'comments.entryid', 'users.name', 'comments.down_votes', 'comments.up_votes');
 }
 
 /************************************************************/
