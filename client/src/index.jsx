@@ -163,7 +163,6 @@ class App extends React.Component {
   }
 
   toggleClass() {
-    console.log('toggleClass running');
     const bool = this.state.nightmode;
     this.setState({
       nightmode: !bool
