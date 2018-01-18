@@ -4,11 +4,13 @@ const knex = require('knex')({
   client: 'pg',
   connection: {
     host : process.env.DATABASE_HOST || '127.0.0.1',
-    user : process.env.DATABASE_USER || config.dbUser,
-    password : process.env.DATABASE_PASSWORD || config.dbPass,
+    // user : process.env.DATABASE_USER || config.dbUser,
+    // password : process.env.DATABASE_PASSWORD || config.dbPass,
     database : process.env.DATABASE_NAME ||  'hue'
   }
 });
+
+// const knex = require('knex')(config);
 
 knex.schema.hasTable('users').then(function(exists) {
   if (!exists) {
@@ -17,6 +19,7 @@ knex.schema.hasTable('users').then(function(exists) {
       table.string('name').unique();
       table.string('password');
       table.string('avatar_name');
+      table.string('email');
       table.timestamp('created_at').notNullable().defaultTo(knex.raw('now()'))
       table.timestamp('updated_at').notNullable().defaultTo(knex.raw('now()'))
     }).then(function (table) {
@@ -66,7 +69,7 @@ knex.schema.hasTable('users').then(function(exists) {
         table.string('voted');
         table.string('userid').references('users.name');
         table.integer('entryid').references('entries.id');
-        table.integer('commentid').references('comments.id');        
+        table.integer('commentid').references('comments.id');
       }).then(function(table) {
         console.log('Created Table comments_votes');
       })
@@ -84,7 +87,7 @@ knex.schema.hasTable('users').then(function(exists) {
         console.log('Created Table entries_votes');
       })
     }
-  })  
+  })
 });
 
 module.exports = knex;
