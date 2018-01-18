@@ -1,19 +1,40 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const nodemailer = require('nodemailer');
+const morgan = require('morgan');
 
 const helpers = require('./helpers');
 const db = require('../database/index');
 const insert = require('../database/inserts');
 const query = require('../database/queries');
 const deletes = require('../database/deletes');
+const loginEmail = require('./emailTemplates/welcome/welcome');
+
+const domain = 'http://localhost:1234';
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'theworldsgreatesthue@gmail.com',
+    pass: 'discoverAustin1!'
+  }
+});
+
+const mailOptions = (email, username, endpoint) => ({
+  from: 'no-reply@theworldsgreatesthue.com',
+  to: email,
+  subject: 'Welcome to Hue!',
+  html: loginEmail(email, username, endpoint)
+});
 
 const app = express();
 
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/../client/dist'));
-app.use(session({secret: 'dont hack me brah'}));
+app.use(session({secret: 'dont hack me brah', name: 'betterHue'}));
 
 
 app.get('/entries', (req, res) => {
@@ -156,7 +177,17 @@ app.post('/downVoteEntry', helpers.checkUser, (req, res) => {
 /************************************************************/
 
 app.post('/signup', (req, res) => {
-	helpers.hashPassword(req)
+  const { email, username } = req.body;
+  const endpoint = `${domain}/api/verifyUser?username=${username}`;
+  transporter.sendMail(mailOptions(email, username, endpoint), function(error, info){
+    if (error) {
+      console.error(error);
+    } else {
+      console.log('Email successfully sent: ' + info.response);
+    }
+  });
+
+  helpers.hashPassword(req)
   .then(() => {
     helpers.createSession(req, function() {
       res.send('Congratulations! Welcome to hue.');
@@ -181,14 +212,25 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
-  req.session.destroy(function() {
-    res.send('Thanks for visiting!')
-  })
+  req.session.destroy();
+  res.clearCookie('betterHue');
+  res.send('Thanks for visiting!');
 });
 
 app.get('/submit', helpers.checkUser, (req, res) => {
   res.send(req.session);
 })
+
+/************************************************************/
+// API routes
+/************************************************************/
+// #=/api/verifyUser?username=kendrick'
+app.get('/api/verifyUser', (req, res) => {
+  console.log('Verified User: ', req.query.username);
+  res.redirect('/');
+});
+
+
 
 /************************************************************/
 /************************************************************/
