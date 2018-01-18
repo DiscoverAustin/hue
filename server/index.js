@@ -1,19 +1,40 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const nodemailer = require('nodemailer');
+const morgan = require('morgan');
 
 const helpers = require('./helpers');
 const db = require('../database/index');
 const insert = require('../database/inserts');
 const query = require('../database/queries');
 const deletes = require('../database/deletes');
+const loginEmail = require('./emailTemplates/welcome/welcome');
+
+const domain = 'http://localhost:1234';
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'theworldsgreatesthue@gmail.com',
+    pass: 'discoverAustin1!'
+  }
+});
+
+const mailOptions = (email, username, endpoint) => ({
+  from: 'no-reply@theworldsgreatesthue.com',
+  to: email,
+  subject: 'Welcome to Hue!',
+  html: loginEmail(email, username, endpoint)
+});
 
 const app = express();
 
+app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/../client/dist'));
-app.use(session({secret: 'dont hack me brah'}));
+app.use(session({secret: 'dont hack me brah', name: 'betterHue'}));
 
 
 app.get('/entries', (req, res) => {
@@ -68,7 +89,7 @@ app.post('/comments', helpers.checkUser, (req, res) => {
 app.delete('/entry', helpers.checkUser, (req, res) => {
   deletes.commentVotes(req.query.id).then(() => {
     deletes.entryVotes(req.query.id).then(() => {
-      deletes.comments(req.query.id).then(() => {     
+      deletes.comments(req.query.id).then(() => {
         deletes.entry(req.query.id).then(data => {
           res.send('deleted entry')
         });
@@ -111,7 +132,7 @@ app.post('/upVoteComment', helpers.checkUser, (req, res) => {
     } else {
       res.sendStatus(201)
     }
-  })  
+  })
 })
 
 app.post('/downVoteComment', helpers.checkUser, (req, res) => {
@@ -124,7 +145,7 @@ app.post('/downVoteComment', helpers.checkUser, (req, res) => {
     } else {
       res.sendStatus(201)
     }
-  })  
+  })
 })
 
 app.post('/upVoteEntry', helpers.checkUser, (req, res) => {
@@ -136,7 +157,7 @@ app.post('/upVoteEntry', helpers.checkUser, (req, res) => {
     } else {
       res.sendStatus(201)
     }
-  })  
+  })
 })
 
 app.post('/downVoteEntry', helpers.checkUser, (req, res) => {
@@ -148,7 +169,7 @@ app.post('/downVoteEntry', helpers.checkUser, (req, res) => {
     } else {
       res.sendStatus(201)
     }
-  })  
+  })
 })
 
 /************************************************************/
@@ -156,13 +177,24 @@ app.post('/downVoteEntry', helpers.checkUser, (req, res) => {
 /************************************************************/
 
 app.post('/signup', (req, res) => {
-	helpers.hashPassword(req)
+  const { email, username } = req.body;
+  const endpoint = `${domain}/api/verifyUser?username=${username}`;
+  transporter.sendMail(mailOptions(email, username, endpoint), function(error, info){
+    if (error) {
+      console.error(error);
+    } else {
+      console.log('Email successfully sent: ' + info.response);
+    }
+  });
+
+  helpers.hashPassword(req)
   .then(() => {
     helpers.createSession(req, function() {
       res.send('Congratulations! Welcome to hue.');
     })
 	})
-  .catch(() => {
+  .catch((e) => {
+    console.error(e);
     res.send('Sorry that username already exists.');
   })
 });
@@ -172,7 +204,7 @@ app.post('/login', (req, res) => {
   .then(() => {
     helpers.createSession(req, function() {
       res.send('Login successful');
-    })      
+    })
   })
   .catch((result) => {
     res.send(result);
@@ -180,9 +212,9 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/logout', (req, res) => {
-  req.session.destroy(function() {
-    res.send('Thanks for visiting!')
-  })
+  req.session.destroy();
+  res.clearCookie('betterHue');
+  res.send('Thanks for visiting!');
 });
 
 app.get('/submit', helpers.checkUser, (req, res) => {
@@ -190,8 +222,19 @@ app.get('/submit', helpers.checkUser, (req, res) => {
 })
 
 /************************************************************/
+// API routes
+/************************************************************/
+// #=/api/verifyUser?username=kendrick'
+app.get('/api/verifyUser', (req, res) => {
+  console.log('Verified User: ', req.query.username);
+  res.redirect('/');
+});
+
+
+
+/************************************************************/
 /************************************************************/
 
 let port = process.env.PORT || 1234;
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`Listening on port ${port}!`))
