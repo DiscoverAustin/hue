@@ -3,6 +3,7 @@ import { Item, Feed, Comment, Header, Form, Button, Icon } from 'semantic-ui-rea
 import { Redirect, Link } from 'react-router-dom';
 import CommentEntry from './CommentEntry.jsx';
 import ta from 'time-ago';
+import Filter from 'bad-words';
 
 class CommentList extends React.Component {
   constructor(props, params) {
@@ -48,7 +49,9 @@ class CommentList extends React.Component {
   }
 
   handleClick() {
-  	this.props.postComment(this.state.comment, this.props.match.params.id)
+    const filter = new Filter();
+    const comment = filter.clean(this.state.comment);
+  	this.props.postComment(comment, this.props.match.params.id)
   	.then(() => {
   		this.props.getComments(this.props.match.params.id)
   		.then(data => this.setState({comments: data.data}))

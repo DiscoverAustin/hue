@@ -1,5 +1,4 @@
 const config = require('../config');
-// const config = require('../knexfile')[process.env.NODE_ENV]
 
 const knex = require('knex')({
   client: 'pg',
@@ -31,8 +30,8 @@ knex.schema.hasTable('users').then(function(exists) {
     if (!exists) {
       knex.schema.createTable('entries', function (table) {
         table.increments();
-        table.integer('up_votes');
-        table.integer('down_votes');
+        table.integer('up_votes').defaultTo(0);
+        table.integer('down_votes').defaultTo(0);
         table.string('title');
         table.string('url');
         table.text('text');
@@ -49,8 +48,8 @@ knex.schema.hasTable('users').then(function(exists) {
     if (!exists) {
       knex.schema.createTable('comments', function (table) {
         table.increments();
-        table.integer('up_votes');
-        table.integer('down_votes');
+        table.integer('up_votes').defaultTo(0);
+        table.integer('down_votes').defaultTo(0);
         table.text('text');
         table.integer('userid').references('users.id');
         table.integer('entryid').references('entries.id');

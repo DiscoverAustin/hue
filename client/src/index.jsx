@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import axios from 'axios';
 import styles from 'styled-components';
-import { Divider, Form, Label, Button, Header, Menu } from 'semantic-ui-react'
+import { Divider, Form, Label, Button, Header, Menu, Segment } from 'semantic-ui-react'
 import { BrowserRouter, HashRouter, Link, Switch, Route, Redirect } from 'react-router-dom';
+import Filter from 'bad-words';
 
 import './style.scss'
 import Home from './components/Home.jsx';
@@ -26,13 +27,23 @@ class App extends React.Component {
       username: '',
       password: '',
       entries: [],
-      auth: false
+      auth: false,
+      nightmode: false
     }
   }
 
   componentDidMount() {
     this.getEntries();
     this.authorize();
+    if (this.state.nightmode) {
+      document.body.style.backgroundColor = 'black';
+    }
+  }
+
+  componentWillMount() {
+    if (this.state.nightmode) {
+      document.body.style.backgroundColor = 'black';
+    }
   }
 
   getEntries(){
@@ -127,8 +138,14 @@ class App extends React.Component {
 
   // Invoked in Login by onSubmitLogin function
   authenticate(url) {
-    console.log('this.state: ', this.state);
-    return axios.post(url, { username: this.state.username, password: this.state.password, email: this.state.email });
+    const filter = new Filter();
+    filter.removeWords('hello');
+    filter.removeWords('title');
+    if (filter.isProfaneLike(this.state.username)) {
+      alert('Please don\'t use profanity');
+    } else {
+      return axios.post(url, { username: this.state.username, password: this.state.password, email: this.state.email });
+    }
   }
   // Invoked in Login, Submit, UserProfile, and Home by onComponentDidMount lifecycle hook
   authorize() {
@@ -143,13 +160,34 @@ class App extends React.Component {
     });
   }
 
+  sortByVotes() {
+    let entries = this.state.entries;
+    entries = entries.sort(function(a, b) {
+      return b['up_votes'] - a['up_votes'];
+    });
+    this.setState({ entries });
+  }
+
+  toggleClass() {
+    const bool = this.state.nightmode;
+    this.setState({
+      nightmode: !bool
+    })
+    document.body.style.backgroundColor = this.state.nightmode ? '#d9d9d9' : '#2d3143'
+  }
+
+
   render() {
   	return (
+      <div className={this.state.nightmode ? "nightmode" : null}>
       <Wrapper>
         <Nav
           user={this.state.auth}
           authenticate={this.authenticate.bind(this)}
           authorize={this.authorize.bind(this)}
+          sortByVotes={this.sortByVotes.bind(this)}
+          nightmode={this.state.nightmode}
+          toggleClass={this.toggleClass.bind(this)}
         />
         <Switch className="myList">
           <Route exact path="/" render={(props) => (
@@ -202,6 +240,7 @@ class App extends React.Component {
           )}/>
         </Switch>
       </Wrapper>
+      </div>
   	)
   }
 }

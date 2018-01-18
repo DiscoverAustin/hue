@@ -52,8 +52,8 @@ app.get('/comments', (req, res) => {
 });
 
 app.get('/userComments', (req, res) => {
-  let userid = req.query.id;
-  query.commentsByUser(userid).then(data => {res.json(data)});
+  let user = req.query.id;
+  query.commentsByUser(user).then(data => {res.json(data)});
 })
 
 app.get('/entry', (req, res) => {

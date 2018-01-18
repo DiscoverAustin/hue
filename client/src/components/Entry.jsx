@@ -8,8 +8,8 @@ class Entry extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      thumbsUp: 0,
-      thumbsDown: 0,
+      thumbsUp: this.props.data.up_votes || 0,
+      thumbsDown: this.props.data.down_votes || 0,
       prestige: 0
     };
     this.handleClick = this.handleClick.bind(this);
@@ -79,7 +79,7 @@ class Entry extends React.Component {
                   <Icon name='thumbs down' onClick={this.downVote.bind(this)}/>
                 </Feed.Like>
                 {this.state.thumbsDown}
-                <Link to={`/thread/${this.props.data.id}`}>comments</Link>
+                <Link to={`/thread/${this.props.data.id}`}><Icon name='comments'></Icon></Link>
                 <a onClick={this.handleClick}>remove</a>
               </Feed.Meta>
             </Feed.Content>
@@ -110,7 +110,7 @@ class Entry extends React.Component {
                   <Icon name='thumbs down' onClick={this.downVote.bind(this)}/>
                 </Feed.Like>
                 {this.state.thumbsDown}
-                <Link to={`/thread/${this.props.data.id}`}>comments</Link>
+                <Link to={`/thread/${this.props.data.id}`}><Icon name='comments'></Icon></Link>
               </Feed.Meta>
           </Feed.Content>
         </Feed.Event>
