@@ -16,31 +16,31 @@ class Nav extends React.Component {
         <Menu className="myMenu">
 
           <Menu.Item name='home' className="nav" href='#/'>
-              <h1 className="text">hue</h1>
+              <h1 className="text">BetterHue</h1>
           </Menu.Item>
 
-          <Menu.Item name='submit' className="nav text" href='#/submit'>
-              New Post
+          <Menu.Item name='submit' className="nav" href='#/submit'>
+              <div class='text'>New Post</div>
           </Menu.Item>
 
-          <Menu.Item name='sort' className="nav text" href='#/' onClick={this.props.sortByVotes}>
-              Popular
+          <Menu.Item name='sort' className="nav" href='#/' onClick={this.props.sortByVotes}>
+              <div class='text'>Popular</div>
           </Menu.Item>
 
-          <Menu.Item name='nightmode' className="nav text" onClick={() => this.props.toggleClass()} >
-              {this.props.nightmode ? 'Day Mode' : 'Night Mode'}
+          <Menu.Item name='nightmode' className="nav" onClick={() => this.props.toggleClass()} >
+              <div class='text'>{this.props.nightmode ? 'Day Mode' : 'Night Mode'}</div>
           </Menu.Item>
 
           <Menu.Menu position="right" onClick={this.toggleClass}>
-            <Menu.Item name='logout' position='right' className="nav text"
+            <Menu.Item name='logout' position='right' className="nav"
               href="#/login" onClick={() => this.props.authenticate('#\logout')}>
-                Logout
+                <div class='text'>Logout</div>
             </Menu.Item>
 
-            <Menu.Item position='right' name='username' className="nav text"
+            <Menu.Item position='right' name='username' className="nav"
               href={`#/user/${this.props.user}`}>
-                <i className="user icon"></i>
-                {this.props.user} 
+                <div class='text'><i className="user icon"></i>
+                {this.props.user} </div>
             </Menu.Item>
 
           </Menu.Menu>
@@ -52,22 +52,23 @@ class Nav extends React.Component {
         <Menu className="myMenu">
 
           <Menu.Item name='home' className="nav" href='#/'>
-              <h1 className="text">hue</h1>
+              <h1 className="text">BetterHue</h1>
           </Menu.Item>
 
           <Menu.Item name='submit' className="nav text" href='#/submit'>
-              New Post
+              <div class='text'>New Post</div>
           </Menu.Item>
 
-            <Menu.Menu position="right"> 
+          <Menu.Menu position="right"> 
+
             <Menu.Item name='login' className="nav text" href="#/login">
-                Login
+                <div class='text'>Login</div>
             </Menu.Item>
             
             <Menu.Item name='username' className="nav" href="#/login">
-              <i className="user icon"></i> 
+              <div class='text'><i className="user icon"></i></div>
             </Menu.Item>
-            
+
           </Menu.Menu>
 
         </Menu>
