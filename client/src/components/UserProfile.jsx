@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Feed, Icon, Divider, Comment, Tab } from 'semantic-ui-react'
+import { Grid, Card, Image, Feed, Icon, Divider, Comment, Tab } from 'semantic-ui-react'
 
 import Entry from './Entry.jsx';
 import CommentEntry from './CommentEntry.jsx';
@@ -54,6 +54,26 @@ class UserProfile extends React.Component {
   }
 
   render (props) {
+
+  const ProfileCard = () => (
+  <Card>
+    <Image src='../../img/default_yellow.jpg' />
+    <Card.Content>
+      <Card.Header>
+        {this.props.match.params.name}
+      </Card.Header>
+      <Card.Meta>
+        <span className='date'>
+          Net Prestige: find a way to get total upvotes - downvotes
+        </span>
+      </Card.Meta>
+      <Card.Description>
+        {this.props.match.params.name} is a an accomplish grackle tracker and can usually be found in local H-E-B parking lots.
+      </Card.Description>
+    </Card.Content>
+  </Card>
+)
+
     const panes = [
       {menuItem: 'Entries', render: () => {
         return (
@@ -101,10 +121,14 @@ class UserProfile extends React.Component {
 
 
     return (
-      <div className = 'ui segment'>
-      <h4>User Profile for {this.props.match.params.name}</h4>
-      <Tab panes={panes} />
-      </div>
+      <Grid>
+        <Grid.Column  width={12}>
+          <Tab className='profilegrid' panes={panes} />
+        </Grid.Column>
+        <Grid.Column width={4}>
+          <ProfileCard/>
+        </Grid.Column>
+      </Grid>
     )
   }
 }
