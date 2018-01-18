@@ -159,7 +159,7 @@ class App extends React.Component {
     entries = entries.sort(function(a, b) {
       return b['up_votes'] - a['up_votes'];
     });
-    this.setState({ entries: entries });
+    this.setState({ entries });
   }
 
   toggleClass() {

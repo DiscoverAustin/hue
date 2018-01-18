@@ -46,5 +46,8 @@
     "styled-components": "^2.4.0",
     "time-ago": "^0.2.1",
     "webpack": "^2.2.1"
+  },
+  "devDependencies": {
+    "file-loader": "^1.1.6"
   }
 }
