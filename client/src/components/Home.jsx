@@ -21,6 +21,7 @@ class Home extends React.Component {
         user = {this.props.user}
         deleteEntry = {this.props.deleteEntry}
         getEntries = {this.props.getEntries}
+        getComments = {this.props.getComments}
       />
     );
   }

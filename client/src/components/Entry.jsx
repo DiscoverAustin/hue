@@ -10,9 +10,19 @@ class Entry extends React.Component {
     this.state = {
       thumbsUp: this.props.data.up_votes || 0,
       thumbsDown: this.props.data.down_votes || 0,
-      prestige: 0
+      prestige: 0,
+      comments: []
     };
     this.handleClick = this.handleClick.bind(this);
+  }
+
+  componentDidMount() {
+    this.props.getComments(this.props.data.id)
+    .then(res => {
+      this.setState({
+        comments: res.data
+      })
+    })
   }
 
   // Deletes an entry
@@ -80,6 +90,7 @@ class Entry extends React.Component {
                 </Feed.Like>
                 {this.state.thumbsDown}
                 <Link to={`/thread/${this.props.data.id}`}><Icon name='comments'></Icon></Link>
+                {this.state.comments.length}
                 <a onClick={this.handleClick}>remove</a>
               </Feed.Meta>
             </Feed.Content>
@@ -111,6 +122,7 @@ class Entry extends React.Component {
                 </Feed.Like>
                 {this.state.thumbsDown}
                 <Link to={`/thread/${this.props.data.id}`}><Icon name='comments'></Icon></Link>
+                {this.state.comments.length}
               </Feed.Meta>
           </Feed.Content>
         </Feed.Event>

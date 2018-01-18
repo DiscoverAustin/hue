@@ -14,7 +14,7 @@ import Submit from './components/Submit.jsx';
 import EntryList from './components/EntryList.jsx';
 import CommentList from './components/CommentList.jsx';
 import Nav from './components/NavBar.jsx';
-import UserProfile from './components/UserProfile.jsx'
+import UserProfile from './components/UserProfile.jsx';
 
 const Wrapper = styles.div`
   margin: .7% 8%;
@@ -28,29 +28,20 @@ class App extends React.Component {
       password: '',
       entries: [],
       auth: false,
-      nightmode: false
+      nightmode: false,
     }
   }
 
   componentDidMount() {
     this.getEntries();
     this.authorize();
-    if (this.state.nightmode) {
-      document.body.style.backgroundColor = 'black';
-    }
-  }
-
-  componentWillMount() {
-    if (this.state.nightmode) {
-      document.body.style.backgroundColor = 'black';
-    }
   }
 
   getEntries(){
     return axios.get('/entries')
     .then(data => {
-      this.setState({entries: data.data})
-    });
+      this.setState({entries: data.data});
+    })
   }
 
   getEntry(entryid){
@@ -170,7 +161,6 @@ class App extends React.Component {
     document.body.style.backgroundColor = this.state.nightmode ? '#d9d9d9' : '#2d3143'
   }
 
-
   render() {
   	return (
       <div className={this.state.nightmode ? "nightmode" : null}> 
@@ -192,6 +182,7 @@ class App extends React.Component {
               authorize={this.authorize.bind(this)}
               deleteEntry={this.deleteEntry.bind(this)}
               getEntries={this.getEntries.bind(this)}
+              getComments={this.getComments.bind(this)}
             />
           )}/>
           <Route exact path="/login" render={(props) => (
