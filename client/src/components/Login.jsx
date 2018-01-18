@@ -1,6 +1,9 @@
 import React from 'react';
-import { Divider, Form, Label, Button, Header } from 'semantic-ui-react';
+import { Divider, Form, Label, Button, Header, Image, Modal } from 'semantic-ui-react';
 import Filter from 'bad-words';
+import { AvatarModal } from './modals';
+
+
 
 class Login extends React.Component {
   constructor(props) {
@@ -26,6 +29,7 @@ class Login extends React.Component {
   render() {
     return (
       <div className="ui center aligned segment">
+        <AvatarModal />
         <Form id="login" onSubmit={this.onSubmit}>
           <Header as='h3'>Log In</Header>
           <Form.Field inline>
