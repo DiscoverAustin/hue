@@ -29,6 +29,7 @@ class Nav extends React.Component {
 
           <Menu.Item name='sort' className="nav" href='#/' onClick={this.props.sortByTime}>
               <div className='text'>Recent</div>
+
           </Menu.Item>
 
           <Menu.Item name='nightmode' className="nav" onClick={() => this.props.toggleClass()} >

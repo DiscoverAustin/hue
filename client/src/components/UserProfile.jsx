@@ -12,7 +12,8 @@ class UserProfile extends React.Component {
     this.state = {
       entries: [],
       comments: [],
-      redirect: false
+      redirect: false,
+      numComments: []
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -27,10 +28,28 @@ class UserProfile extends React.Component {
         return data;
       }
     )
-    .then(data => this.setState({entries: data.data}));
+    .then(data => this.setState({entries: data.data}))
+    .then(() => {
+      for (var i = 0; i < this.state.entries.length; i++) {
+        this.props.getComments(this.state.entries[i].id)
+        .then(res => {
+          const arr = this.state.numComments.slice();
+          arr.push(res.data.length);
+          this.setState({numComments: arr})
+        }).then(() => this.numComments())
+      }
+    })
 
     this.props.getUserComments(this.props.match.params.name)
     .then(data => this.setState({comments: data.data}));
+  }
+
+  numComments(num) {
+    var arr = this.state.entries.slice();
+    for (var i = arr.length - 1; i >= 0; i--) {
+      arr[i].numComments = this.state.numComments[i];
+    }
+    this.setState({entries: arr});
   }
 
   componentWillReceiveProps(nextprops){
