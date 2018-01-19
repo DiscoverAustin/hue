@@ -16,15 +16,6 @@ class Entry extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  componentDidMount() {
-    this.props.getComments(this.props.data.id)
-    .then(res => {
-      this.setState({
-        comments: res.data
-      })
-    })
-  }
-
   // Deletes an entry
   handleClick() {
     this.props.deleteEntry(this.props.data.id)
@@ -100,7 +91,7 @@ class Entry extends React.Component {
                 </Feed.Like>
                 {this.state.thumbsDown}
                 <Link to={`/thread/${this.props.data.id}`}><Icon name='comments'></Icon></Link>
-                {this.state.comments.length}
+                {this.props.data.numComments}
                 {removeButton}
               </Feed.Meta>
             </Feed.Content>

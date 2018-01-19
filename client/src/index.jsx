@@ -29,6 +29,7 @@ class App extends React.Component {
       entries: [],
       auth: false,
       nightmode: false,
+      numComments: []
     }
   }
 
@@ -41,7 +42,24 @@ class App extends React.Component {
     return axios.get('/entries')
     .then(data => {
       this.setState({entries: data.data});
+    }).then(() => {
+      for (var i = 0; i < this.state.entries.length; i++) {
+        this.getComments(this.state.entries[i].id)
+        .then(res => {
+          const arr = this.state.numComments.slice();
+          arr.push(res.data.length);
+          this.setState({numComments: arr})
+        }).then(() => this.numComments())
+      }
     })
+  }
+
+  numComments(num) {
+    var arr = this.state.entries.slice();
+    for (var i = arr.length - 1; i >= 0; i--) {
+      arr[i].numComments = this.state.numComments[i];
+    }
+    this.setState({entries: arr});
   }
 
   getEntry(entryid){
@@ -227,6 +245,7 @@ class App extends React.Component {
               getUserEntries={this.getUserEntries.bind(this)}
               authorize={this.authorize.bind(this)}
               getEntry={this.getEntry.bind(this)}
+              getComments={this.getComments.bind(this)}
             />
           )}/>
         </Switch>
