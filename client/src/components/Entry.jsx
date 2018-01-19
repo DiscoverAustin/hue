@@ -10,7 +10,8 @@ class Entry extends React.Component {
     this.state = {
       thumbsUp: this.props.data.up_votes || 0,
       thumbsDown: this.props.data.down_votes || 0,
-      prestige: 0
+      prestige: 0,
+      comments: []
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -90,6 +91,7 @@ class Entry extends React.Component {
                 </Feed.Like>
                 {this.state.thumbsDown}
                 <Link to={`/thread/${this.props.data.id}`}><Icon name='comments'></Icon></Link>
+                {this.props.data.numComments}
                 {removeButton}
               </Feed.Meta>
             </Feed.Content>
