@@ -28,7 +28,7 @@ class Nav extends React.Component {
           </Menu.Item>
 
           <Menu.Item name='nightmode' className="nav" onClick={() => this.props.toggleClass()} >
-              <div className='text'>{this.props.nightmode ? 'Day Mode' : 'Night Mode'}</div>
+              <div className='text'>{this.props.nightmode ? 'Day Mode' : 'Night Mode'}</div>      
           </Menu.Item>
 
           <Menu.Menu position="right" onClick={this.toggleClass}>
