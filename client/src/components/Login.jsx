@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Form, Label, Button, Header } from 'semantic-ui-react';
+import { Divider, Form, Label, Button, Header, Image, Modal } from 'semantic-ui-react';
 import Filter from 'bad-words';
 
 class Login extends React.Component {
@@ -11,8 +11,10 @@ class Login extends React.Component {
     e.preventDefault();
     const { history } = this.props;
     this.props.authenticate(e.target.id).then((res) => {
-      if ((res.data === 'Login successful') || (res.data === 'Congratulations! Welcome to hue.')) {
+      if (res.data === 'Login successful') {
         history.push('/');
+      } else if (res.data === 'Congratulations! Welcome to hue.') {
+        history.push('/createAvatar');
       } else {
         alert(res.data);
       }
