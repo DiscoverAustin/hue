@@ -34,7 +34,7 @@ class AvatarBuilder extends Component {
       <div className="App">
         <div className="main">
           <div
-            style={{'text-align': 'center'}}
+            style={{'textAlign': 'center'}}
             >
             <h1> Thanks for joining BetterHue!</h1>
             <h2>Create your personalized BetterHue avatar below</h2>

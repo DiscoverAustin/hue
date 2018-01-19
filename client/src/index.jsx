@@ -30,29 +30,38 @@ class App extends React.Component {
       password: '',
       entries: [],
       auth: false,
-      nightmode: false
+      nightmode: false,
+      numComments: []
     }
   }
 
   componentDidMount() {
     this.getEntries();
     this.authorize();
-    if (this.state.nightmode) {
-      document.body.style.backgroundColor = 'black';
-    }
-  }
-
-  componentWillMount() {
-    if (this.state.nightmode) {
-      document.body.style.backgroundColor = 'black';
-    }
   }
 
   getEntries(){
     return axios.get('/entries')
     .then(data => {
-      this.setState({entries: data.data})
-    });
+      this.setState({entries: data.data});
+    }).then(() => {
+      for (var i = 0; i < this.state.entries.length; i++) {
+        this.getComments(this.state.entries[i].id)
+        .then(res => {
+          const arr = this.state.numComments.slice();
+          arr.push(res.data.length);
+          this.setState({numComments: arr})
+        }).then(() => this.numComments())
+      }
+    })
+  }
+
+  numComments(num) {
+    var arr = this.state.entries.slice();
+    for (var i = arr.length - 1; i >= 0; i--) {
+      arr[i].numComments = this.state.numComments[i];
+    }
+    this.setState({entries: arr});
   }
 
   getEntry(entryid){
@@ -178,7 +187,6 @@ class App extends React.Component {
     document.body.style.backgroundColor = this.state.nightmode ? '#d9d9d9' : '#2d3143'
   }
 
-
   render() {
   	return (
       <div className={this.state.nightmode ? "nightmode" : null}>
@@ -200,6 +208,7 @@ class App extends React.Component {
               authorize={this.authorize.bind(this)}
               deleteEntry={this.deleteEntry.bind(this)}
               getEntries={this.getEntries.bind(this)}
+              getComments={this.getComments.bind(this)}
             />
           )}/>
           <Route exact path="/login" render={(props) => (
@@ -238,6 +247,7 @@ class App extends React.Component {
               getUserEntries={this.getUserEntries.bind(this)}
               authorize={this.authorize.bind(this)}
               getEntry={this.getEntry.bind(this)}
+              getComments={this.getComments.bind(this)}
             />
           )}/>
         <Route exact path="/createAvatar" render={(props) => (

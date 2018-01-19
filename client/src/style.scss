@@ -1,5 +1,5 @@
 body {
-	background: #d9d9d9 ;
+	background: #CFC8C6 ;
 }
 
 .myList {
@@ -7,13 +7,20 @@ body {
 }
 
 .myMenu {
-	background: #ff6600 !important;
+	background: #355383 !important;
 }
 
 .nav { 
-	background: #ff6600 !important;
+	background: #355383 !important;
+  .text {
+    color: #C6C96D;
+  }
+
   &:hover {
-    background: #ffc299 !important;
+    background: #C6C96D !important;
+    .text {
+      color: #355383;
+    }
   }
 }
 
@@ -21,6 +28,15 @@ body {
 	color: black ;
 }
 
+.profilegrid {
+  background: #fff;
+  border: 15px solid white !important;
+}
+
+/* =============================
+  Nightmode
+  ============================== 
+*/
 .nightmode {
     .nav {
       background: #4183c4 !important;
@@ -70,4 +86,11 @@ body {
 		background: #2d3143;
 		border: 1px solid white !important;
 	}
+
+  .profilegrid {
+    background: #2d3143;
+    border: 15px solid #2d3143 !important;
+  }
+
 }
+
