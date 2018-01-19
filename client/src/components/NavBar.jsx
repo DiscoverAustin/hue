@@ -20,26 +20,26 @@ class Nav extends React.Component {
           </Menu.Item>
 
           <Menu.Item name='submit' className="nav" href='#/submit'>
-              <div class='text'>New Post</div>
+              <div className='text'>New Post</div>
           </Menu.Item>
 
           <Menu.Item name='sort' className="nav" href='#/' onClick={this.props.sortByVotes}>
-              <div class='text'>Popular</div>
+              <div className='text'>Popular</div>
           </Menu.Item>
 
           <Menu.Item name='nightmode' className="nav" onClick={() => this.props.toggleClass()} >
-              <div class='text'>{this.props.nightmode ? 'Day Mode' : 'Night Mode'}</div>
+              <div className='text'>{this.props.nightmode ? 'Day Mode' : 'Night Mode'}</div>      
           </Menu.Item>
 
           <Menu.Menu position="right" onClick={this.toggleClass}>
             <Menu.Item name='logout' position='right' className="nav"
               href="#/login" onClick={() => this.props.authenticate('#\logout')}>
-                <div class='text'>Logout</div>
+                <div className='text'>Logout</div>
             </Menu.Item>
 
             <Menu.Item position='right' name='username' className="nav"
               href={`#/user/${this.props.user}`}>
-                <div class='text'><i className="user icon"></i>
+                <div className='text'><i className="user icon"></i>
                 {this.props.user} </div>
             </Menu.Item>
 
@@ -56,17 +56,17 @@ class Nav extends React.Component {
           </Menu.Item>
 
           <Menu.Item name='submit' className="nav text" href='#/submit'>
-              <div class='text'>New Post</div>
+              <div className='text'>New Post</div>
           </Menu.Item>
 
           <Menu.Menu position="right"> 
 
             <Menu.Item name='login' className="nav text" href="#/login">
-                <div class='text'>Login</div>
+                <div className='text'>Login</div>
             </Menu.Item>
             
             <Menu.Item name='username' className="nav" href="#/login">
-              <div class='text'><i className="user icon"></i></div>
+              <div className='text'><i className="user icon"></i></div>
             </Menu.Item>
 
           </Menu.Menu>
