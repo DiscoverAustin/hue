@@ -52,7 +52,10 @@ class Entry extends React.Component {
   }
 
   componentWillReceiveProps(nextprops){
-    this.getEntryVotes();
+    this.setState({
+      thumbsUp: nextprops.data.up_votes,
+      thumbsDown: nextprops.data.down_votes
+    });
   }
 
 
