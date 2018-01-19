@@ -3,7 +3,6 @@ import { Button, Image, Modal, Header } from 'semantic-ui-react';
 
 const AvatarModal = () => (
   <Modal
-    trigger={<Button>Show Modal</Button>}
     closeOnRootNodeClick={false}
   >
     <Modal.Header>Select a Photo</Modal.Header>
@@ -19,3 +18,7 @@ const AvatarModal = () => (
 )
 
 export default AvatarModal;
+
+
+
+// trigger={j<Button>Show Modal</Button>}

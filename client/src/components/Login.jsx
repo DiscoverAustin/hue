@@ -1,9 +1,6 @@
 import React from 'react';
 import { Divider, Form, Label, Button, Header, Image, Modal } from 'semantic-ui-react';
 import Filter from 'bad-words';
-import { AvatarModal } from './modals';
-
-
 
 class Login extends React.Component {
   constructor(props) {
@@ -14,8 +11,10 @@ class Login extends React.Component {
     e.preventDefault();
     const { history } = this.props;
     this.props.authenticate(e.target.id).then((res) => {
-      if ((res.data === 'Login successful') || (res.data === 'Congratulations! Welcome to hue.')) {
+      if (res.data === 'Login successful') {
         history.push('/');
+      } else if (res.data === 'Congratulations! Welcome to hue.') {
+        history.push('/createAvatar');
       } else {
         alert(res.data);
       }
@@ -29,7 +28,6 @@ class Login extends React.Component {
   render() {
     return (
       <div className="ui center aligned segment">
-        <AvatarModal />
         <Form id="login" onSubmit={this.onSubmit}>
           <Header as='h3'>Log In</Header>
           <Form.Field inline>
