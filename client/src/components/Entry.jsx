@@ -10,7 +10,8 @@ class Entry extends React.Component {
     this.state = {
       thumbsUp: this.props.data.up_votes || 0,
       thumbsDown: this.props.data.down_votes || 0,
-      prestige: 0
+      prestige: 0,
+      comments: []
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -52,16 +53,26 @@ class Entry extends React.Component {
   }
 
   componentWillReceiveProps(nextprops){
-    this.getEntryVotes();
+    this.setState({
+      thumbsUp: nextprops.data.up_votes,
+      thumbsDown: nextprops.data.down_votes
+    });
   }
+
 
   // Renders different versions of the componet depending if a user is logged in
   render () {
-    if(this.props.user === this.props.data.name){
-      return (
-        <div>
+    let removeButton;
+    if (this.props.user === this.props.data.name) {
+      removeButton = <a onClick={this.handleClick}>remove</a>
+    } else {
+      removeButton = <a></a>
+    }
+    return (
+      <div>
         <Feed>
           <Feed.Event>
+            <Feed.Label image={'../../img/default_yellow.jpg'}/>
             <Feed.Content>
               <Feed.Date>{ta.ago(this.props.data.created_at)}</Feed.Date>
               <Feed.Summary>
@@ -80,42 +91,13 @@ class Entry extends React.Component {
                 </Feed.Like>
                 {this.state.thumbsDown}
                 <Link to={`/thread/${this.props.data.id}`}><Icon name='comments'></Icon></Link>
-                <a onClick={this.handleClick}>remove</a>
+                {this.props.data.numComments}
+                {removeButton}
               </Feed.Meta>
             </Feed.Content>
           </Feed.Event>
         </Feed>
         <Divider></Divider>
-        </div>
-      );
-    }
-    return (
-      <div>
-      <Feed>
-        <Feed.Event>
-          <Feed.Content>
-            <Feed.Date>{ta.ago(this.props.data.created_at)}</Feed.Date>
-            <Feed.Summary>
-              <a href={this.props.data.url}>{this.props.data.title}</a>
-            </Feed.Summary>
-            <Feed.Extra text>
-              by <Link to={`/user/${this.props.data.name}`}>{this.props.data.name}</Link>
-            </Feed.Extra>
-              <Feed.Meta>
-                <Feed.Like>
-                  <Icon name='thumbs up' onClick={this.upVote.bind(this)}/>
-                </Feed.Like>
-                {this.state.thumbsUp}
-                <Feed.Like>
-                  <Icon name='thumbs down' onClick={this.downVote.bind(this)}/>
-                </Feed.Like>
-                {this.state.thumbsDown}
-                <Link to={`/thread/${this.props.data.id}`}><Icon name='comments'></Icon></Link>
-              </Feed.Meta>
-          </Feed.Content>
-        </Feed.Event>
-      </Feed>
-      <Divider></Divider>
       </div>
     );
   }
