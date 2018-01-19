@@ -168,6 +168,10 @@ class App extends React.Component {
     this.setState({ entries });
   }
 
+  sortByTime() {
+    this.getEntries();
+  }
+
   toggleClass() {
     const bool = this.state.nightmode;
     this.setState({
@@ -186,6 +190,7 @@ class App extends React.Component {
           authenticate={this.authenticate.bind(this)}
           authorize={this.authorize.bind(this)}
           sortByVotes={this.sortByVotes.bind(this)}
+          sortByTime={this.sortByTime.bind(this)}
           nightmode={this.state.nightmode}
           toggleClass={this.toggleClass.bind(this)}
         />
