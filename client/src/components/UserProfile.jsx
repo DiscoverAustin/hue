@@ -80,10 +80,13 @@ class UserProfile extends React.Component {
       ' practices getting photos to meet the rule of thirds for optimum beauty, but usually fails.',
       ' has lost 254 chess matches against Deep Blue.  Microdosing did not help',
       ' has been banned from 3 casinos for card counting and now uses those skills counting fish off the coast of Alaska',
-      ' spends more time than is healthy watching you tube videos about cybersecurity'
+      ' spends more time than is healthy watching you tube videos about cybersecurity',
+      ' was unable to understand language until the age of 15 but has since developed a translator plugin for Google to translate Shakespeare into actual English.',
+      ' volunteers to teach at risk youth how to locate radiation shelters that are off the grid.',
+      ' has been known to associate with the former international criminal mastermind Henrietta.',
     ];
 
-    let bioIndex = (Math.floor(Math.random() * 20) % 5);
+    let bioIndex = (Math.floor(Math.random() * 8));
 
     this.setState({
       bio: bios[bioIndex]
