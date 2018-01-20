@@ -29,7 +29,6 @@ module.exports = {
       }, {
       test: /\.(png|jpg|gif)$/,
       loader: 'file-loader'
-      // include: [ DIST_DIR
     }
     ]
   },
