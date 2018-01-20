@@ -74,7 +74,7 @@ class Entry extends React.Component {
       <div>
         <Feed>
           <Feed.Event>
-            <Feed.Label style={{width: '100px'}} image={`/api/getUserImage?user=${this.props.data.name}.png`}/>
+            <Feed.Label style={{width: '100px'}} href={`/#/user/${this.props.data.name}`} image={`/api/getUserImage?user=${this.props.data.name}.png`}/>
             <Feed.Content>
               <Feed.Date>{ta.ago(this.props.data.created_at)}</Feed.Date>
               <Feed.Summary>
