@@ -17,6 +17,7 @@ import CommentList from './components/CommentList.jsx';
 import Nav from './components/NavBar.jsx';
 import UserProfile from './components/UserProfile.jsx';
 import AvatarBuilder from './components/AvatarBuilder';
+import ResetPassword from './components/ResetPassword.jsx';
 
 const Wrapper = styles.div`
   margin: .7% 8%;
@@ -257,6 +258,9 @@ class App extends React.Component {
           )}/>
         <Route exact path="/createAvatar" render={(props) => (
             <AvatarBuilder />
+          )}/>
+        <Route path="/resetPassword" render={(props) => (
+              <ResetPassword {...props}/>
           )}/>
         </Switch>
       </Wrapper>

@@ -4,6 +4,12 @@ const user = (name) => {
   return knex('users').where({name: name})
 }
 
+const usernameByEmail = (email) => {
+  return knex('users')
+  .where({email})
+  .select('users.name');
+}
+
 const entries = () => {
   return knex('entries')
   .join('users', 'entries.userid', '=', 'users.id')
@@ -30,7 +36,7 @@ const entriesByUser = name => {
   return knex('entries')
   .where({userid: userid})
   .join('users', 'entries.userid', '=', 'users.id')
-  .select('entries.id', 'entries.url', 'entries.title', 'entries.text', 'entries.created_at', 'users.name', 'entries.down_votes', 'entries.up_votes');  
+  .select('entries.id', 'entries.url', 'entries.title', 'entries.text', 'entries.created_at', 'users.name', 'entries.down_votes', 'entries.up_votes');
 }
 
 const commentsByUser = name => {
@@ -41,6 +47,11 @@ const commentsByUser = name => {
   .select('comments.id', 'comments.text', 'comments.created_at', 'comments.entryid', 'users.name', 'comments.down_votes', 'comments.up_votes');
 }
 
+const updatePassword = (name, password) => {
+  return knex('users')
+  .where({name})
+  .update('password', password)
+}
 /************************************************************/
 // Prestige (karma) queries
 /************************************************************/
@@ -82,5 +93,7 @@ module.exports = {
   getEntryVotes,
   getCommentVotes,
   checkEntryVote,
-  checkCommentVote
+  checkCommentVote,
+  usernameByEmail,
+  updatePassword
 };

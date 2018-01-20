@@ -1,6 +1,7 @@
 import React from 'react';
 import { Divider, Form, Label, Button, Header, Image, Modal } from 'semantic-ui-react';
 import Filter from 'bad-words';
+import { PasswordReset } from './modals';
 
 class Login extends React.Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class Login extends React.Component {
   }
 
   render() {
+    // <a href="api/forgottenPassword"> Forgot password? </a>
     return (
       <div className="ui center aligned segment">
         <Form id="login" onSubmit={this.onSubmit}>
@@ -42,7 +44,7 @@ class Login extends React.Component {
         </Form>
 
         <br></br>
-        <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"> Forgot password? </a>
+        <PasswordReset />
         <br></br>
         <br></br>
 
