@@ -13,7 +13,7 @@ class Login extends React.Component {
     const { history } = this.props;
     this.props.authenticate(e.target.id).then((res) => {
       if (res.data === 'Login successful') {
-        history.push('/');
+        history.push('/#');
       } else if (res.data === 'Congratulations! Welcome to hue.') {
         history.push('/createAvatar');
       } else {

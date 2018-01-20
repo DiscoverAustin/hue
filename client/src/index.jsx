@@ -46,7 +46,7 @@ class App extends React.Component {
     .then(data => {
       this.setState({entries: data.data});
     }).then(() => {
-      for (var i = 0; i < this.state.entries.length; i++) {
+      for (let i = 0; i < this.state.entries.length; i++) {
         this.getComments(this.state.entries[i].id)
         .then(res => {
           const arr = this.state.numComments.slice();
@@ -172,6 +172,10 @@ class App extends React.Component {
     });
   }
 
+  logoutUser() {
+    return axios.post('/logout');
+  }
+
   sortByVotes() {
     let entries = this.state.entries;
     entries = entries.sort(function(a, b) {
@@ -192,6 +196,39 @@ class App extends React.Component {
     document.body.style.backgroundColor = this.state.nightmode ? '#d9d9d9' : '#2d3143'
   }
 
+    handleSearch() {
+    const query = document.getElementById('search').value;
+    const where = document.getElementById('select').value;
+    if (where === 'betterhue') {
+      this.getEntries().then(() => {
+        let entries = this.state.entries.slice();
+        entries = entries.filter(entry => {
+          return entry.title.includes(query) || entry.text.includes(query);
+        })
+        this.setState({entries})
+      })
+    } else if (where === 'google') {
+      console.log('google search')
+    } else if (where === 'wikipedia') {
+      fetch( 'https://en.wikipedia.org/w/api.php?action=query&titles=' + query + '&prop=revisions&rvprop=content&format=json&formatversion=2', {
+        method: 'POST',
+        headers: new Headers( {
+          'Api-User-Agent': 'Example/1.0'
+        } )
+        // Other init settings such as 'credentials'
+      } ).then( function ( response ) {
+        if ( response.ok ) {
+          return response.json();
+        }
+        throw new Error( 'Network response was not ok: ' + response.statusText );
+      } ).then( function ( data ) {
+        // do something with data
+        console.log(data);
+      });
+    }
+
+  }
+
   render() {
   	return (
       <div className={this.state.nightmode ? "nightmode" : null}>
@@ -204,6 +241,8 @@ class App extends React.Component {
           sortByTime={this.sortByTime.bind(this)}
           nightmode={this.state.nightmode}
           toggleClass={this.toggleClass.bind(this)}
+          handleSearch={this.handleSearch.bind(this)}
+          logoutUser={this.logoutUser.bind(this)}
         />
         <Switch className="myList">
           <Route exact path="/" render={(props) => (
