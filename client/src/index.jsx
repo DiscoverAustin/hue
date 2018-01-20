@@ -8,7 +8,7 @@ import { BrowserRouter, HashRouter, Link, Switch, Route, Redirect } from 'react-
 import Filter from 'bad-words';
 
 import './style.scss';
-import './App.css';
+import './App.scss';
 import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
 import Submit from './components/Submit.jsx';
