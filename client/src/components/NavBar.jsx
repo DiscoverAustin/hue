@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Divider, Form, Label, Button, Header, Menu } from 'semantic-ui-react'
 import EntryList from './EntryList.jsx';
 import Search from './Search.jsx';
+import BetterHue from '../img/BetterHue3.png';
 
 class Nav extends React.Component {
   constructor(props) {
@@ -16,8 +17,8 @@ class Nav extends React.Component {
       return (
         <Menu className="myMenu">
 
-          <Menu.Item name='home' className="nav" href='#/'>
-              <h1 className="text">BetterHue</h1>
+          <Menu.Item name='home' className="nav huelogo" href='#/'>
+              <img className="hueimg" src={BetterHue} />
           </Menu.Item>
 
           <Menu.Item name='submit' className="nav" href='#/submit'>
@@ -65,8 +66,8 @@ class Nav extends React.Component {
       return (
         <Menu className="myMenu">
 
-          <Menu.Item name='home' className="nav" href='#/'>
-              <h1 className="text">BetterHue</h1>
+          <Menu.Item name='home' className="nav huelogo" href='#/'>
+              <img className="hueimg" src={BetterHue} />
           </Menu.Item>
 
           <Menu.Menu position="right"> 
