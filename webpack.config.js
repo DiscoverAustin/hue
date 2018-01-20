@@ -28,7 +28,8 @@ module.exports = {
           'sass-loader']
       }, {
       test: /\.(png|jpg|gif)$/,
-      loader: 'file-loader'
+      loader: 'file-loader',
+      include : [ SRC_DIR, DIST_DIR ]
       // include: [ DIST_DIR
     }
     ]
