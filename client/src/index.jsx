@@ -7,7 +7,8 @@ import { Divider, Form, Label, Button, Header, Menu, Segment } from 'semantic-ui
 import { BrowserRouter, HashRouter, Link, Switch, Route, Redirect } from 'react-router-dom';
 import Filter from 'bad-words';
 
-import './style.scss'
+import './style.scss';
+import './App.css';
 import Home from './components/Home.jsx';
 import Login from './components/Login.jsx';
 import Submit from './components/Submit.jsx';
@@ -15,6 +16,7 @@ import EntryList from './components/EntryList.jsx';
 import CommentList from './components/CommentList.jsx';
 import Nav from './components/NavBar.jsx';
 import UserProfile from './components/UserProfile.jsx';
+import AvatarBuilder from './components/AvatarBuilder';
 
 const Wrapper = styles.div`
   margin: .7% 8%;
@@ -252,6 +254,9 @@ class App extends React.Component {
               getEntry={this.getEntry.bind(this)}
               getComments={this.getComments.bind(this)}
             />
+          )}/>
+        <Route exact path="/createAvatar" render={(props) => (
+            <AvatarBuilder />
           )}/>
         </Switch>
       </Wrapper>
