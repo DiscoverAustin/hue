@@ -7,7 +7,7 @@ const EntryList = (props) => (
         {props.data.map((data, index) => {
             return (  
               <div key={index}>
-                {data['down_votes'] < 0 ?
+                {data['up_votes'] + data['down_votes'] < -1 ?
                 null
                 :
                 <div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Divider, Form, Label, Button, Header, Menu } from 'semantic-ui-react'
 import EntryList from './EntryList.jsx';
+import Search from './Search.jsx';
 
 class Nav extends React.Component {
   constructor(props) {
@@ -37,6 +38,14 @@ class Nav extends React.Component {
           </Menu.Item>
 
           <Menu.Menu position="right" onClick={this.toggleClass}>
+
+            <Menu.Item position="right" >
+              <Search 
+                data = {this.props.data}
+                handleSearch = {this.props.handleSearch}
+              />
+            </Menu.Item>
+
             <Menu.Item name='logout' position='right' className="nav"
               href="#/login" onClick={() => this.props.logoutUser()}>
                 <div className='text'>Logout</div>
