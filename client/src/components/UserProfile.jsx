@@ -74,20 +74,26 @@ class UserProfile extends React.Component {
 
   render (props) {
 
+  const prestige = this.state.entries.reduce((tv, cv) => {
+    tv += cv.up_votes;
+    tv -= cv.down_votes;
+    return tv;
+  }, 0);
+
   const ProfileCard = () => (
   <Card>
-    <Image src='../../img/default_yellow.jpg' />
+    <Image src={`/api/getUserImage?user=${this.props.match.params.name}.png`}/>
     <Card.Content>
       <Card.Header>
         {this.props.match.params.name}
       </Card.Header>
       <Card.Meta>
         <span className='date'>
-          Net Prestige: find a way to get total upvotes - downvotes
+          { `Net Prestige: ${prestige}` }
         </span>
       </Card.Meta>
       <Card.Description>
-        {this.props.match.params.name} is a an accomplish grackle tracker and can usually be found in local H-E-B parking lots.
+        {this.props.match.params.name} is a an accomplished grackle tracker and can usually be found in local H-E-B parking lots.
       </Card.Description>
     </Card.Content>
   </Card>
@@ -99,11 +105,11 @@ class UserProfile extends React.Component {
           <div>
             <div>
               <br />
-              {this.state.entries.map((entry, index) => 
-                <Entry 
-                  key={index} 
-                  data={entry} 
-                  user={this.props.user} 
+              {this.state.entries.map((entry, index) =>
+                <Entry
+                  key={index}
+                  data={entry}
+                  user={this.props.user}
                   deleteEntry={this.props.deleteEntry}
                 />)}
             </div>
@@ -117,7 +123,7 @@ class UserProfile extends React.Component {
             <Comment.Group>
               {this.state.comments.map((comment, index) => {
                 return ( <div key={index}>
-                <CommentData 
+                <CommentData
                   comment = {comment}
                   getEntry={this.props.getEntry}
                 />
@@ -126,7 +132,7 @@ class UserProfile extends React.Component {
                   user = {this.props.user}
                   deleteComment = {this.props.deleteComment}
                   entry={comment.entryid}
-                /> 
+                />
                 <Divider></Divider>
                 </div>
                 )}

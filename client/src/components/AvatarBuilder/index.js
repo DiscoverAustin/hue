@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import {fabric} from 'fabric';
 import FabricCanvas from './FabricCanvas';
 import TemplateList from './TemplateList'
-import {bglist, facelist, eyeslist, faciallist, hairlist} from './img/templates/templatelist';
+import {bglist, facelist, eyeslist, faciallist, hairlist} from '../../../dist/img/templates/templatelist';
 import {Col, Tabs, Tab, Jumbotron, Button } from 'react-bootstrap';
 
 class AvatarBuilder extends Component {

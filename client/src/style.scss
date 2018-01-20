@@ -1,5 +1,6 @@
 body {
 	background: #CFC8C6 ;
+
 }
 
 .myList {
@@ -10,7 +11,7 @@ body {
 	background: #355383 !important;
 }
 
-.nav { 
+.nav {
 	background: #355383 !important;
   .text {
     color: #C6C96D;
@@ -24,6 +25,10 @@ body {
   }
 }
 
+.content {
+	font-size: 17px !important;
+}
+
 .text {
 	color: black ;
 }
@@ -35,7 +40,7 @@ body {
 
 /* =============================
   Nightmode
-  ============================== 
+  ==============================
 */
 
 .nightmode {
@@ -94,4 +99,3 @@ body {
   }
 
 }
-

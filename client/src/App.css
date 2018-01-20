@@ -31,7 +31,7 @@
 } */
 
 
-/* h1 {
+h1 {
   text-shadow: 5px 3px 15px rgba(0, 0, 0, .8);
   line-height: .65;
   margin-top: .5em;
@@ -41,7 +41,8 @@
 p {
   font-size: 0.7em;
   text-shadow: 3px 3px 3px rgba(0, 0, 0, .8);
-} */
+}
+
 
 .nav-tabs{
   margin-bottom:15px;
@@ -50,7 +51,7 @@ p {
 /* Canvas */
 #main-canvas{
   background: #ccc;
-  /* background: url('./img/bg-canvas.png'); */
+  background: url('../dist/img/bg-canvas.png');
   background-repeat: repeat;
   border:1px solid #ececec;
   margin: 10px auto;

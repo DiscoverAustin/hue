@@ -81,13 +81,14 @@ class CommentList extends React.Component {
       	<div>
   	    	<div className = 'ui segment'>
             <Item>
+              <Item.Image size='tiny' src={`/api/getUserImage?user=${this.props.user}.png`}/>
               <Item.Content>
                 <Item.Header><a href={this.state.entry.url}>{this.state.entry.title}</a></Item.Header>
               </Item.Content>
               <Item.Extra>
                 <Icon name='thumbs up' />
                 <Icon name='thumbs down'/>
-                by <Link to={`/user/${this.state.entry.name}`}>{this.state.entry.name}</Link> {ta.ago(this.state.entry.created_at)} 
+                by <Link to={`/user/${this.state.entry.name}`}>{this.state.entry.name}</Link> {ta.ago(this.state.entry.created_at)}
               </Item.Extra>
             </Item>
   	    	</div>
@@ -108,19 +109,24 @@ class CommentList extends React.Component {
       <div>
         <div>
           <div className = 'ui segment'>
-            <Item>
-              <Item.Content>
-                <Item.Header><a href={this.state.entry.url}>{this.state.entry.title}</a></Item.Header>
-              </Item.Content>
-              <Item.Description>
-                {this.state.entry.text}
-              </Item.Description>
-              <Item.Extra>
-                <Icon name='thumbs up' />
-                <Icon name='thumbs down'/>
-                by <Link to={`/user/${this.state.entry.name}`}>{this.state.entry.name}</Link> {ta.ago(this.state.entry.created_at)} 
-              </Item.Extra>
-            </Item>
+            <Item.Group>
+              <Item>
+                <Item.Image size='tiny' src={`/api/getUserImage?user=${this.props.user}.png`}/>
+                <Item.Group>
+                  <Item.Content>
+                    <Item.Header><a href={this.state.entry.url}>{this.state.entry.title}</a></Item.Header>
+                  </Item.Content>
+                  <Item.Description>
+                    {this.state.entry.text}
+                  </Item.Description>
+                  <Item.Extra>
+                    <Icon name='thumbs up' />
+                    <Icon name='thumbs down'/>
+                    by <Link to={`/user/${this.state.entry.name}`}>{this.state.entry.name}</Link> {ta.ago(this.state.entry.created_at)}
+                  </Item.Extra>
+                </Item.Group>
+              </Item>
+            </Item.Group>
           </div>
           <div>
           <Form>
@@ -130,13 +136,13 @@ class CommentList extends React.Component {
           </div>
           <Comment.Group>
             <Header as='h3' dividing>Comments</Header>
-            {this.state.comments.map((comment, index) => 
-              <CommentEntry 
-                key = {index} 
-                comment={comment} 
-                user = {this.props.user} 
-                deleteComment = {this.props.deleteComment} 
-                afterDelete={this.afterDelete.bind(this)} 
+            {this.state.comments.map((comment, index) =>
+              <CommentEntry
+                key = {index}
+                comment={comment}
+                user = {this.props.user}
+                deleteComment = {this.props.deleteComment}
+                afterDelete={this.afterDelete.bind(this)}
                 entry={this.state.entry.id}
               />
             )}

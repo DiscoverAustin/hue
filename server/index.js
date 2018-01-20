@@ -58,8 +58,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(session(sessionOptions));
 
+app.get('/api/getUserImage', (req, res) => {
+  const { user } = req.query;
+  res.sendFile(path.join(__dirname, `/userAvatars/${user}`));
+});
+
 app.get('*', (req, res, next) => {
-  // console.log('currentUser: ', req.sessionID);
   console.log('currentUser: ', req.session.user);
   next();
 });
@@ -270,12 +274,15 @@ app.post('/api/uploadAvatar', upload.single('avatar'), (req, res) => {
   const imgBuffer = new Buffer(imgData, 'base64');
   console.log('user?: ', req.session.user);
   const imgName = `${req.session.user}.png`
-  fs.writeFile(`./userAvatars/${imgName}`, imgBuffer, (err) => {
+  fs.writeFile(`./server/userAvatars/${imgName}`, imgBuffer, (err) => {
     if (err) { console.error(err)
     } else {
       console.log(`${imgName} successfully saved!`);
     }
   });
+
+// /api/getUserImage?user=${this.props.data.name}.png
+
   // console.log('req.file: ', req.file)
   // console.log('New Avatar: ', avatarUrl);
   // axios.get(avatarUrl)
