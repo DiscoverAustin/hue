@@ -84,6 +84,16 @@ function checkEntryVote(userid, entryid, callback) {
     })
   }
 
+
+  function updatePassword(req) {
+    return new Promise((resolve, reject) => {
+      bcrypt.hash(req.body.password, null, null, function(err, hash) {
+        query.updatePassword(req.body.username, hash)
+        .then(() => resolve())
+        .catch((e) => reject(e));
+      });
+    })
+  }
   // Invoked by comparePassword and hashPassword
   // Required input: client request object
   // On sucess: sends sucess response
@@ -130,5 +140,6 @@ module.exports = {
   comparePassword,
   hashPassword,
   createSession,
-  checkUser
+  checkUser,
+  updatePassword
 };

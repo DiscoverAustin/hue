@@ -3,14 +3,6 @@
   box-sizing: border-box;
 }
 
-/* body {
-  font-family: 'Raleway', sans-serif;
-  color: #4c4c4c;
-  background: #360033;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #0b8793, #360033);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #0b8793, #360033); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-/* } */
 
 .App {
   width: 100%;
@@ -43,6 +35,7 @@ p {
   text-shadow: 3px 3px 3px rgba(0, 0, 0, .8);
 } */
 
+
 .nav-tabs{
   margin-bottom:15px;
 }
@@ -50,7 +43,8 @@ p {
 /* Canvas */
 #main-canvas{
   background: #ccc;
-  /* background: url('./img/bg-canvas.png'); */
+  /* background: url('../dist/img/bg-canvas.png'); */
+  background: url('./img/bg-canvas.png');
   background-repeat: repeat;
   border:1px solid #ececec;
   margin: 10px auto;

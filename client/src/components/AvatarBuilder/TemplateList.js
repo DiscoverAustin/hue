@@ -3,9 +3,8 @@ import TemplateListItem from './TemplateListItem';
 
 export default class TemplateList extends React.Component{
 
-
 	render(){
-
+		console.log(this.props);
 		const results = this.props.data;
 
 		let templates = results.map(item =>

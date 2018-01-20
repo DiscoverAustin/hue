@@ -23,6 +23,8 @@ const insert = require('../database/inserts');
 const query = require('../database/queries');
 const deletes = require('../database/deletes');
 const loginEmail = require('./emailTemplates/welcome/welcome');
+const resetEmail = require('./emailTemplates/resetPassword');
+
 const DIST_DIR = path.join(__dirname, '../client/dist');
 
 const domain = 'http://localhost:1234';
@@ -35,11 +37,18 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const mailOptions = (email, username, endpoint) => ({
+const welcomeMailOptions = (email, username, endpoint) => ({
   from: 'no-reply@theworldsgreatesthue.com',
   to: email,
   subject: 'Welcome to Hue!',
   html: loginEmail(email, username, endpoint)
+});
+
+const resetMailOptions = (email, username, endpoint) => ({
+  from: 'no-reply@theworldsgreatesthue.com',
+  to: email,
+  subject: 'Password Reset Request',
+  html: resetEmail(email, username, endpoint)
 });
 
 const sessionOptions = {
@@ -58,11 +67,50 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(session(sessionOptions));
 
+app.get('/api/getUserImage', (req, res) => {
+  const { user } = req.query;
+  res.sendFile(path.join(__dirname, `/userAvatars/${user}`));
+});
+
 app.get('*', (req, res, next) => {
-  // console.log('currentUser: ', req.sessionID);
   console.log('currentUser: ', req.session.user);
   next();
 });
+
+
+app.post('/api/resetPassword', (req, res) => {
+  const { email } = req.body;
+  query.usernameByEmail(email)
+  .then((res) => {
+    const { name: username } = res[0];
+    const endpoint = `${domain}/api/resetPasswordConfirm?username=${username}`;
+    transporter.sendMail(resetMailOptions(email, username, endpoint), function(error, info){
+      if (error) {
+        console.error(error);
+      } else {
+        console.log('Reset password Email successfully sent: ' + info.response);
+      }
+    });
+  })
+  .catch((e) => { console.error(e) });
+  res.end();
+})
+
+app.post('/api/changePassword', (req, res) => {
+  const { username, password } = req.body;
+  console.log('pswd: ', req.body);
+  helpers.updatePassword(req)
+  .then(() => {
+    console.log('success update!');
+    res.send('success!');
+   })
+   .catch((e) => {
+     res.send('failure')
+     console.error(e)
+   });
+});
+
+
 
 app.get('/entries', (req, res) => {
   console.log('/entries user: ', req.session);
@@ -213,7 +261,7 @@ app.post('/downVoteEntry', helpers.checkUser, (req, res) => {
 app.post('/signup', (req, res) => {
   const { email, username } = req.body;
   const endpoint = `${domain}/api/verifyUser?username=${username}`;
-  transporter.sendMail(mailOptions(email, username, endpoint), function(error, info){
+  transporter.sendMail(welcomeMailOptions(email, username, endpoint), function(error, info){
     if (error) {
       console.error(error);
     } else {
@@ -264,18 +312,29 @@ app.get('/api/verifyUser', (req, res) => {
   res.redirect('/');
 });
 
+app.get('/api/resetPasswordConfirm', (req, res) => {
+  const { username } = req.query;
+  console.log('Verified User: ', req.query.username);
+  // res.json({username})
+  res.redirect('/#/resetPassword/?username=${username}');
+});
+
 app.post('/api/uploadAvatar', upload.single('avatar'), (req, res) => {
   const { avatarUrl } = req.body;
   const imgData = avatarUrl.replace(/^data:image\/\w+;base64,/, "");
   const imgBuffer = new Buffer(imgData, 'base64');
   console.log('user?: ', req.session.user);
   const imgName = `${req.session.user}.png`
-  fs.writeFile(`./userAvatars/${imgName}`, imgBuffer, (err) => {
+  fs.writeFile(`./server/userAvatars/${imgName}`, imgBuffer, (err) => {
     if (err) { console.error(err)
     } else {
       console.log(`${imgName} successfully saved!`);
     }
   });
+
+
+// /api/getUserImage?user=${this.props.data.name}.png
+
   // console.log('req.file: ', req.file)
   // console.log('New Avatar: ', avatarUrl);
   // axios.get(avatarUrl)

@@ -1,5 +1,6 @@
 body {
 	background: #CFC8C6 ;
+
 }
 
 .myList {
@@ -10,7 +11,7 @@ body {
 	background: #355383 !important;
 }
 
-.nav { 
+.nav {
 	background: #355383 !important;
   .text {
     color: #C6C96D;
@@ -22,6 +23,14 @@ body {
       color: #355383;
     }
   }
+}
+
+.content {
+	font-size: 17px !important;
+}
+
+.text {
+	color: black ;
 }
 
 .profilegrid {
@@ -40,7 +49,7 @@ body {
 
 .gsc-input {
 	background: white !important;
-	padding: 0 !important;	
+	padding: 0 !important;
 }
 
 .gsc-control-cse-en {
@@ -58,7 +67,7 @@ body {
 
 /* =============================
   Nightmode
-  ============================== 
+  ==============================
 */
 
 .nightmode {
@@ -117,6 +126,3 @@ body {
   }
 
 }
-
-
-

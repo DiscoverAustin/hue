@@ -49,7 +49,7 @@ class CommentEntry extends React.Component {
   }
 
   componentWillReceiveProps() {
-    this.getCommentVotes();    
+    this.getCommentVotes();
   }
 
   // Renders different versions of the componet depending if a user is logged in
@@ -58,15 +58,16 @@ class CommentEntry extends React.Component {
       return (
         <Comment>
           <Comment.Content>
+            <Comment.Avatar src={`/api/getUserImage?user=${this.props.comment.name}.png`}/>
             <Comment.Author as='a'>{this.props.comment.name}</Comment.Author>
             <Comment.Metadata>
               <div>{ta.ago(this.props.comment.created_at)}</div>
-              
+
               <Icon name='thumbs up' onClick={this.upVote.bind(this)}/>
               {this.state.thumbsUp}
               <Icon name='thumbs down' onClick={this.downVote.bind(this)}/>
               {this.state.thumbsDown}
-              
+
             </Comment.Metadata>
             <Comment.Text>{this.props.comment.text}</Comment.Text>
             <Comment.Actions>
@@ -78,16 +79,17 @@ class CommentEntry extends React.Component {
     }
     return (
       <Comment>
+        <Comment.Avatar src={`/api/getUserImage?user=${this.props.comment.name}.png`}/>
         <Comment.Content>
           <Comment.Author as='a'>{this.props.comment.name}</Comment.Author>
           <Comment.Metadata>
             <div>{ta.ago(this.props.comment.created_at)}</div>
-            
+
             <Icon name='thumbs up' onClick={this.upVote.bind(this)}/>
             {this.state.thumbsUp}
             <Icon name='thumbs down' onClick={this.downVote.bind(this)}/>
-            {this.state.thumbsDown}            
-            
+            {this.state.thumbsDown}
+
           </Comment.Metadata>
           <Comment.Text>{this.props.comment.text}</Comment.Text>
           <Comment.Actions></Comment.Actions>

@@ -68,11 +68,13 @@ class Entry extends React.Component {
     } else {
       removeButton = <a></a>
     }
+
+    console.log('feed prop')
     return (
       <div>
         <Feed>
           <Feed.Event>
-            <Feed.Label image={'../../img/default_yellow.jpg'}/>
+            <Feed.Label style={{width: '100px'}} image={`/api/getUserImage?user=${this.props.data.name}.png`}/>
             <Feed.Content>
               <Feed.Date>{ta.ago(this.props.data.created_at)}</Feed.Date>
               <Feed.Summary>
