@@ -60,10 +60,6 @@ class Nav extends React.Component {
               <h1 className="text">BetterHue</h1>
           </Menu.Item>
 
-          <Menu.Item name='submit' className="nav text" href='#/submit'>
-              <div className='text'>New Post</div>
-          </Menu.Item>
-
           <Menu.Menu position="right"> 
 
             <Menu.Item name='login' className="nav text" href="#/login">
