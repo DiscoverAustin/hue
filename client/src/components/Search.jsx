@@ -9,6 +9,7 @@ class Search extends React.Component {
 		this.toggleGoogle = this.toggleGoogle.bind(this);
 	}
 
+
 	toggleGoogle = () => {
 		if (document.getElementById('select').value === 'google') {
 		  this.setState({google: true},
