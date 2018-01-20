@@ -13,7 +13,8 @@ class UserProfile extends React.Component {
       entries: [],
       comments: [],
       redirect: false,
-      numComments: []
+      numComments: [],
+      bio: ''
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -42,6 +43,7 @@ class UserProfile extends React.Component {
 
     this.props.getUserComments(this.props.match.params.name)
     .then(data => this.setState({comments: data.data}));
+    this.createBio();
   }
 
   numComments(num) {
@@ -72,6 +74,22 @@ class UserProfile extends React.Component {
     // .then(() => console.log('handleClick ran'));
   }
 
+  createBio() {
+    const bios = [
+      ' is a an accomplish grackle tracker and can usually be found in local H-E-B parking lots.',
+      ' practices getting photos to meet the rule of thirds for optimum beauty, but usually fails.',
+      ' has lost 254 chess matches against Deep Blue.  Microdosing did not help',
+      ' has been banned from 3 casinos for card counting and now uses those skills counting fish off the coast of Alaska',
+      ' spends more time than is healthy watching you tube videos about cybersecurity'
+    ];
+
+    let bioIndex = (Math.floor(Math.random() * 20) % 5);
+
+    this.setState({
+      bio: bios[bioIndex]
+    });
+  }
+
   render (props) {
 
   const ProfileCard = () => (
@@ -87,7 +105,7 @@ class UserProfile extends React.Component {
         </span>
       </Card.Meta>
       <Card.Description>
-        {this.props.match.params.name} is a an accomplish grackle tracker and can usually be found in local H-E-B parking lots.
+        {this.props.match.params.name}{this.state.bio} 
       </Card.Description>
     </Card.Content>
   </Card>
