@@ -71,9 +71,9 @@ class FabricCanvas extends React.Component{
 				<canvas id= 'main-canvas'>
 				</canvas>
 
-				<Button bsStyle="success" onClick = {this.saveToServer} bsSize="large" block>
-                	Save Avatar
-              	</Button>
+				<Button bsStyle="success" onClick = {this.saveToServer} bsSize="large" href='/#' block>
+        	Save Avatar
+      	</Button>
 			</div>
 		);
 	}

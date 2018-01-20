@@ -45,7 +45,7 @@ class App extends React.Component {
     .then(data => {
       this.setState({entries: data.data});
     }).then(() => {
-      for (var i = 0; i < this.state.entries.length; i++) {
+      for (let i = 0; i < this.state.entries.length; i++) {
         this.getComments(this.state.entries[i].id)
         .then(res => {
           const arr = this.state.numComments.slice();
@@ -171,12 +171,20 @@ class App extends React.Component {
     });
   }
 
+  logoutUser() {
+    return axios.post('/logout');
+  }
+
   sortByVotes() {
     let entries = this.state.entries;
     entries = entries.sort(function(a, b) {
       return b['up_votes'] - a['up_votes'];
     });
     this.setState({ entries });
+  }
+
+  sortByTime() {
+    this.getEntries();
   }
 
   toggleClass() {
@@ -229,9 +237,11 @@ class App extends React.Component {
           authenticate={this.authenticate.bind(this)}
           authorize={this.authorize.bind(this)}
           sortByVotes={this.sortByVotes.bind(this)}
+          sortByTime={this.sortByTime.bind(this)}
           nightmode={this.state.nightmode}
           toggleClass={this.toggleClass.bind(this)}
           handleSearch={this.handleSearch.bind(this)}
+          logoutUser={this.logoutUser.bind(this)}
         />
         <Switch className="myList">
           <Route exact path="/" render={(props) => (
