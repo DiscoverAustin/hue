@@ -76,7 +76,7 @@ class UserProfile extends React.Component {
 
   createBio() {
     const bios = [
-      ' is a an accomplish grackle tracker and can usually be found in local H-E-B parking lots.',
+      ' is an accomplished grackle tracker and can usually be found in local H-E-B parking lots.',
       ' practices getting photos to meet the rule of thirds for optimum beauty, but usually fails.',
       ' has lost 254 chess matches against Deep Blue.  Microdosing did not help',
       ' has been banned from 3 casinos for card counting and now uses those skills counting fish off the coast of Alaska',
