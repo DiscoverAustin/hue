@@ -72,13 +72,8 @@ class FabricCanvas extends React.Component{
 				</canvas>
 
 				<Button bsStyle="success" onClick = {this.saveToServer} bsSize="large" href='/#' block>
-<<<<<<< HEAD
-                	Save Avatar
-              	</Button>
-=======
         	Save Avatar
       	</Button>
->>>>>>> e6510ba441f9be8eff6908b06a01192cdd0ef15b
 			</div>
 		);
 	}
