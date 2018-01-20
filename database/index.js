@@ -4,8 +4,8 @@ const knex = require('knex')({
   client: 'pg',
   connection: {
     host : process.env.DATABASE_URL || '127.0.0.1',
-    // user : process.env.DATABASE_USER || config.dbUser,
-    // password : process.env.DATABASE_PASSWORD || config.dbPass,
+    user : process.env.DATABASE_USER || '',
+    password : process.env.DATABASE_PASSWORD || '',
     database : process.env.DATABASE_NAME ||  'hue'
   }
 });
