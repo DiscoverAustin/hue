@@ -54,7 +54,9 @@ class CommentList extends React.Component {
   	this.props.postComment(comment, this.props.match.params.id)
   	.then(() => {
   		this.props.getComments(this.props.match.params.id)
-  		.then(data => this.setState({comments: data.data}))
+  		.then(data => this.setState({
+        comments: data.data,
+      }))
   	});
   }
 

@@ -27,8 +27,13 @@ class Nav extends React.Component {
               <div className='text'>Popular</div>
           </Menu.Item>
 
+          <Menu.Item name='sort' className="nav" href='#/' onClick={this.props.sortByTime}>
+              <div className='text'>Recent</div>
+
+          </Menu.Item>
+
           <Menu.Item name='nightmode' className="nav" onClick={() => this.props.toggleClass()} >
-              <div className='text'>{this.props.nightmode ? 'Day Mode' : 'Night Mode'}</div>
+              <div className='text'>{this.props.nightmode ? 'Day Mode' : 'Night Mode'}</div>      
           </Menu.Item>
 
           <Menu.Menu position="right" onClick={this.toggleClass}>
@@ -53,10 +58,6 @@ class Nav extends React.Component {
 
           <Menu.Item name='home' className="nav" href='#/'>
               <h1 className="text">BetterHue</h1>
-          </Menu.Item>
-
-          <Menu.Item name='submit' className="nav text" href='#/submit'>
-              <div className='text'>New Post</div>
           </Menu.Item>
 
           <Menu.Menu position="right"> 
