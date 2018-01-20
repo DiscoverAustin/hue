@@ -19,8 +19,6 @@ class Home extends React.Component {
 
 
     return (
-      <Grid>
-        <Grid.Column  width={10}>
           <EntryList 
             data = {this.props.data}
             user = {this.props.user}
@@ -28,14 +26,6 @@ class Home extends React.Component {
             getEntries = {this.props.getEntries}
             getComments = {this.props.getComments}
           />
-        </Grid.Column>
-        <Grid.Column width={6}>
-          <Search 
-            data = {this.props.data}
-            handleSearch = {this.props.handleSearch}
-          />
-        </Grid.Column>
-      </Grid>
     )
   }
 }

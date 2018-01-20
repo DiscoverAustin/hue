@@ -12,8 +12,8 @@ class Search extends React.Component {
 	toggleGoogle = () => {
 		if (document.getElementById('select').value === 'google') {
 		  this.setState({google: true},
-  		  (function() {
-			    var cx = '000953156395195838223:7lnoek9ftkw';
+			  (function() {
+			    var cx = '000953156395195838223:gspdbzq4kqq';
 			    var gcse = document.createElement('script');
 			    gcse.type = 'text/javascript';
 			    gcse.async = true;
@@ -29,19 +29,15 @@ class Search extends React.Component {
 
 	render = () => {
 		return (
-		  <div>
+		  <div className="search-container" >
 		  {this.state.google ? <div id="test"></div> : 
 		    <input type="search" id="search" placeholder="search... " onChange={() => this.props.handleSearch()}/>}
-		    <select id="select" onChange={() => this.toggleGoogle()}>
-		      <option value="betterhue">BetterHue</option>
-		      <option value="google">Google</option>
-		      <option value="wikipedia">Wikipedia</option>
-		      <option value="reddit">Reddit</option>
-		    </select>
-		    <section>
-		      <h4>Search Results</h4>
-		      <p></p>
-		    </section>
+          <select id="select" onChange={() => this.toggleGoogle()}>
+            <option value="betterhue">BetterHue</option>
+            <option value="google">Google</option>
+            <option value="wikipedia">Wikipedia</option>
+            <option value="reddit">Reddit</option>
+          </select>
 		  </div>
 		);
 	}

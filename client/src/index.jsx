@@ -231,6 +231,7 @@ class App extends React.Component {
           sortByVotes={this.sortByVotes.bind(this)}
           nightmode={this.state.nightmode}
           toggleClass={this.toggleClass.bind(this)}
+          handleSearch={this.handleSearch.bind(this)}
         />
         <Switch className="myList">
           <Route exact path="/" render={(props) => (
@@ -242,7 +243,6 @@ class App extends React.Component {
               deleteEntry={this.deleteEntry.bind(this)}
               getEntries={this.getEntries.bind(this)}
               getComments={this.getComments.bind(this)}
-              handleSearch={this.handleSearch.bind(this)}
             />
           )}/>
           <Route exact path="/login" render={(props) => (
