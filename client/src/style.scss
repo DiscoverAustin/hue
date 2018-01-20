@@ -24,14 +24,33 @@ body {
   }
 }
 
-.text {
-	color: black ;
-}
-
 .profilegrid {
   background: #fff;
   border: 15px solid white !important;
 }
+
+
+
+.gsc-search-button-v2 {
+    display: none !important;
+    background: green !important;
+}
+
+.gsc-input {
+	background: white !important;
+	padding: 0 !important;	
+}
+
+.gsc-control-cse-en {
+	padding: 0 !important;
+}
+
+.gsc-search-box {
+	margin: 0 !important;
+}
+
+
+
 
 /* =============================
   Nightmode
@@ -94,4 +113,6 @@ body {
   }
 
 }
+
+
 
