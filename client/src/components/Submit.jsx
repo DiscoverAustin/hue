@@ -1,6 +1,5 @@
 import React from 'react';
 import { Divider, Form, Label, Button, Header, Menu } from 'semantic-ui-react';
-// var Filter = require('bad-words');
 import Filter from 'bad-words';
 
 class Submit extends React.Component {

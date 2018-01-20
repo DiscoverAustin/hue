@@ -3,6 +3,19 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const nodemailer = require('nodemailer');
 const morgan = require('morgan');
+const axios = require('axios');
+const fs = require('fs');
+const multer = require('multer');
+// const storage = multer.diskStorage({
+//   destination: (req, file, callback) {
+//     callback(null, '.uploads');
+//   },
+//   filename: (req, file, callback) {
+//     callback(null, )
+//   }
+// })
+const upload = multer({ dest: 'userAvatars/' });
+const path = require('path');
 
 const helpers = require('./helpers');
 const db = require('../database/index');
@@ -10,6 +23,7 @@ const insert = require('../database/inserts');
 const query = require('../database/queries');
 const deletes = require('../database/deletes');
 const loginEmail = require('./emailTemplates/welcome/welcome');
+const DIST_DIR = path.join(__dirname, '../client/dist');
 
 const domain = 'http://localhost:1234';
 
@@ -28,17 +42,36 @@ const mailOptions = (email, username, endpoint) => ({
   html: loginEmail(email, username, endpoint)
 });
 
+const sessionOptions = {
+  secret: 'dont hack me brah',
+  name: 'betterHue',
+  saveUninitialized: true,
+  resave: true
+};
+
 const app = express();
 
 app.use(morgan('dev'));
+app.use(bodyParser({limit: '15mb'}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/../client/dist'));
-app.use(session({secret: 'dont hack me brah', name: 'betterHue'}));
+app.use(session(sessionOptions));
 
+app.get('*', (req, res, next) => {
+  // console.log('currentUser: ', req.sessionID);
+  console.log('currentUser: ', req.session.user);
+  next();
+});
 
 app.get('/entries', (req, res) => {
-  query.entries().then(data => {res.json(data)});
+  console.log('/entries user: ', req.session);
+  query.entries()
+  .then(data => {res.json(data)})
+  .catch((e) => {
+    console.error(e)
+    res.statusCode(500).end()
+  });
 });
 
 app.get('/userEntries', (req, res) => {
@@ -64,6 +97,7 @@ app.get('/entry', (req, res) => {
 app.post('/entries', helpers.checkUser, (req, res) => {
   let entry = req.body;
   entry.user = req.session.user;
+  // console.log('entry.user: ', req.session.user);
   if(entry.title === '' || ((entry.text === '') && (entry.url === 'none'))) {
     res.send('failure');
   }else{
@@ -230,7 +264,26 @@ app.get('/api/verifyUser', (req, res) => {
   res.redirect('/');
 });
 
-
+app.post('/api/uploadAvatar', upload.single('avatar'), (req, res) => {
+  const { avatarUrl } = req.body;
+  const imgData = avatarUrl.replace(/^data:image\/\w+;base64,/, "");
+  const imgBuffer = new Buffer(imgData, 'base64');
+  console.log('user?: ', req.session.user);
+  const imgName = `${req.session.user}.png`
+  fs.writeFile(`./userAvatars/${imgName}`, imgBuffer, (err) => {
+    if (err) { console.error(err)
+    } else {
+      console.log(`${imgName} successfully saved!`);
+    }
+  });
+  // console.log('req.file: ', req.file)
+  // console.log('New Avatar: ', avatarUrl);
+  // axios.get(avatarUrl)
+  // .then((res) => {
+  //   // console.log('res from new avatar: ', res);
+  // })
+  // .catch((e) => { console.error(e) });
+})
 
 /************************************************************/
 /************************************************************/

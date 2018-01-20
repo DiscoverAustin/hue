@@ -15,8 +15,12 @@ module.exports = {
         loader : 'babel-loader',
         test : /\.jsx?/,
         include : SRC_DIR
-      },
-      {
+      },{
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader']
+      }, {
         test: /\.scss$/,
         use: [
           'style-loader',
@@ -24,8 +28,8 @@ module.exports = {
           'sass-loader']
       }, {
       test: /\.(png|jpg|gif)$/,
-      loader: 'file-loader',
-      include: DIST_DIR
+      loader: 'file-loader'
+      // include: [ DIST_DIR
     }
     ]
   },
